@@ -3,12 +3,12 @@
     <div class="col-md-12">
       <h4 class="py-3 text-center">Login</h4>
 
-      <form class="needs-validation" novalidate="">
+      <form class="needs-validation" :class="{ 'was-validated': showValidated }" novalidate="">
         <div class="row justify-content-center py-3">
           <div class="col-md-6">
             <label for="email">Email</label>
-            <input v-model="inputItem.email" type="email" class="form-control" id="email" />
-            <div class="invalid-feedback">
+            <input v-model="inputItem.email" type="email" class="form-control" id="email" required=""/>
+            <div v-if="!emailValidated" class="invalid-feedback">
               Please enter a valid email address.
             </div>
           </div>
@@ -17,8 +17,8 @@
         <div class="row justify-content-center py-3">
           <div class="col-md-6">
             <label for="password">Password</label>
-            <input v-model="inputItem.password" type="password" class="form-control" id="password" placeholder="" required="" />
-            <div class="invalid-feedback">
+            <input v-model="inputItem.password" type="password" class="form-control" id="password" required="" />
+            <div v-if="!passwordValidated" class="invalid-feedback">
               Please enter your password.
             </div>
           </div>
@@ -28,7 +28,7 @@
 
         <div class="row pb-3 justify-content-center">
           <div class="col-md-6">
-            <button @click.stop="submitAccount()" class="btn btn-primary btn-lg btn-block" type="button">Sign in</button>
+            <button @click.stop="formCheck()" class="btn btn-primary btn-lg btn-block" type="button">Sign in</button>
           </div>
         </div>
       </form>
@@ -52,21 +52,41 @@ export interface loginItem {
 })
 export default class LoginView extends Vue {
   inputItem = <loginItem>{}
-  // confirmPassword: string = ''
+  showValidated = false
+  emailValidated = true
+  passwordValidated = true 
 
-  navigatePrevPage () {
-    if (this.$store.state.loginRedirect !== ''){
-      this.$router.push({name: this.$store.state.loginRedirect})
-    } else {
-      this.$router.push({name: 'home'})
-    }
+  validEmail (email) {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
   }
 
-  submitAccount() {
+  formCheck () {
+    debugger
+    if (this.inputItem.email && this.validEmail(this.inputItem.email) && this.inputItem.password) {
+      this.submitLogin()
+      return
+    }
+
+    if (!this.inputItem.email){
+      this.emailValidated = false
+    }
+
+    if (this.validEmail(this.inputItem.email)){
+      this.emailValidated = false
+    }
+
+    if (!this.inputItem.password) {
+      this.passwordValidated = false
+    }
+
+    this.showValidated = true
+  }
+
+  submitLogin() {
     this.$store.dispatch(ActionTypes.LOGIN, { account: this.inputItem }).then((success)=>{
-      this.navigatePrevPage()
+      this.$router.push({name: this.$store.state.routeMap.from || 'home'})
     })
-    
   }
 
   checkLoginStatus() {

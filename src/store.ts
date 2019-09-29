@@ -12,20 +12,28 @@ import { AxiosResponse } from 'axios'
 
 Vue.use(Vuex)
 
-
-export const errorHandler = (response: AxiosResponse | boolean) =>{
+export const errorHandler = (response: AxiosResponse | boolean) : any => {
   debugger
   if (typeof response === 'boolean') {
     router.replace({ name: 'internal-server-error'})
   } else {
-    debugger
     switch (response.status) {
       case 400:
-        router.replace("/")
-        debugger
+        if (response.data.message !== undefined) {
+          store.dispatch(ActionTypes.OPEN_ALERT, { alert: { show: true, message: response.data.message, style: 'alert-warning'}})
+          break
+
+        } else {
+          response.status = 500
+        }
 
       case 401:
-        router.replace({ name: 'login'})
+        if (store.state.routeMap.to === 'login' && response.data.message !== undefined) {
+          store.dispatch(ActionTypes.OPEN_ALERT, { alert: { show: true, message: response.data.message, style: 'alert-danger'}})
+        } else {
+          store.dispatch(ActionTypes.OPEN_ALERT, { alert: { show: true, message: 'required login', style: 'alert-danger'}})
+          router.replace({ name: 'login'})
+        }
         break
 
       case 403:
@@ -49,12 +57,14 @@ export const errorHandler = (response: AxiosResponse | boolean) =>{
         break
     }
   }
+  return false
 }
 
 const store = new Vuex.Store({
   state: {
     isLogin: false,
-    loginRedirect: 'home',
+    // loginRedirect: 'home',
+    routeMap: { to: 'home', from: 'home'},
     recipeList: <Array<RecipeListItem>>[],
     pagination: <PaginationItem>{},
     recipe: <RecipeItem>{},
@@ -70,15 +80,19 @@ const store = new Vuex.Store({
       hasRequestOnce: false 
     },
     alert: <AlertItem>{
-      show: true,
-      message: 'alert-success',
-      style: 'alert-success'
+      show: false,
+      message: '',
+      style: ''
     }
   },
 
   mutations: {
-    [MutationTypes.SET_LOGIN_REDIRECT]: (state, { loginRedirect }) => {
-      state.loginRedirect = loginRedirect
+    // [MutationTypes.SET_LOGIN_REDIRECT]: (state, { loginRedirect }) => {
+    //   state.loginRedirect = loginRedirect
+    // },
+
+    [MutationTypes.SET_ROUTE_MAP]: (state, { routeMap }) => {
+      state.routeMap = routeMap
     },
 
     [MutationTypes.SET_ALERT]: (state, { alert }) => {
@@ -88,8 +102,8 @@ const store = new Vuex.Store({
     [MutationTypes.RESET_ALERT]: (state) => {
       state.alert = <AlertItem>{
         show: false,
-        message: '',
-        style: ''
+        message: 'welcome to smile cook',
+        style: 'alert-light'
       }
     },
 
@@ -167,8 +181,16 @@ const store = new Vuex.Store({
   },
 
   actions: {
-    [ActionTypes.LOGIN_REDIRECT]: ({ commit, dispatch, state }, { loginRedirect }) => {
-      commit(MutationTypes.SET_LOGIN_REDIRECT, { loginRedirect })
+    // [ActionTypes.LOGIN_REDIRECT]: ({ commit, dispatch, state }, { loginRedirect }) => {
+    //   commit(MutationTypes.SET_LOGIN_REDIRECT, { loginRedirect })
+    // },
+
+    [ActionTypes.CURRENT_ROUTE]: ({ commit, dispatch, state }, { routeMap }) => {
+      commit(MutationTypes.SET_ROUTE_MAP, { routeMap })
+    },
+
+    [ActionTypes.OPEN_ALERT]: ({ commit, dispatch, state }, { alert }) => {
+      commit(MutationTypes.SET_ALERT, { alert })
     },
 
     [ActionTypes.CLOSE_ALERT]: ({ commit, dispatch, state }) => {
@@ -178,8 +200,8 @@ const store = new Vuex.Store({
     [ActionTypes.REGISTER]: ({ commit, dispatch, state }, { profile }) => {
       return api.registerUser(profile)
         .then((resp) => {
-          // showSomething
-          // commit()
+          commit(MutationTypes.SET_ALERT, { alert: { show: true, message: 'register success! please check your email for active account', style: 'alert-success' }})
+          return true
         }, errorHandler)
     },
 
@@ -195,15 +217,7 @@ const store = new Vuex.Store({
           dispatch(ActionTypes.GET_USER, { username: 'me' })
 
           resolve(resp)
-        }).catch(error => {
-          debugger
-          localStorage.removeItem('_ACCESS_TOKEN')
-          localStorage.removeItem('_REFRESH_TOKEN')
-
-          commit(MutationTypes.REQUEST_TOKEN_ERROR)
-
-          reject(error)
-        })
+        }, errorHandler)
       })
     },
 
@@ -214,7 +228,7 @@ const store = new Vuex.Store({
 
         localStorage.removeItem('_ACCESS_TOKEN')
         localStorage.removeItem('_REFRESH_TOKEN')
-
+        debugger
         api.logoutUser().then((resp) => {
           resolve(true)
         }).catch(error => {

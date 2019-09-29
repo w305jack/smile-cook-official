@@ -1,6 +1,6 @@
 import { store } from '@/store'
 
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 import { UserItem, AvatatItem, RecipeListItem, RecipeListPaginationItem, TokenItem, RefreshItem, MessageItem, RecipeItem } from '@/response'
 // var API_HOST = 'http://localhost:5000/'
@@ -31,19 +31,50 @@ function authorizationOption () : Object {
   }
 }
 
-function registerUser (profile:object): Promise<boolean> {
-  return new Promise<boolean>((resolve, reject) => {
+function registerUser (profile:object): Promise<AxiosResponse> {
+  return new Promise<AxiosResponse>((resolve, reject) => {
     axios.post(userListAPI, {
       ...profile
-    }).then(function (response:any) {
-      if (response.status === 204) {
-        resolve(true)
+    }).then(function (response: AxiosResponse) {
+      if (response.status === 201) {
+        resolve(response)
       } else {
         reject(response)
       }
     }).catch(function (error) {
+      reject(error.response)
+    })
+  })
+}
+
+function loginUser (account:object): Promise<TokenItem> {
+  return new Promise<TokenItem>((resolve, reject) => {
+    axios.post(tokenAPI, {
+      ...account
+    }).then(function (response:any) {
       debugger
-      reject(false)
+      if (response.status === 200) {
+        resolve(response.data)
+      } else {
+        reject(response)
+      }
+    }).catch(function (error) {
+      reject(error.response)
+    })
+  })
+}
+
+function reLoginUser (): Promise<RefreshItem> {
+  return new Promise<RefreshItem>((resolve, reject) => {
+    axios.post(refreshAPI, {
+    }).then(function (response:any) {
+      if (response.status === 200) {
+        resolve(response.data)
+      } else {
+        reject()
+      }
+    }).catch(function (error) {
+      reject()
     })
   })
 }
@@ -112,40 +143,9 @@ function getUserRecipeList (username: string, page: number, perPage: number, sor
   })
 }
 
-function loginUser (account:object): Promise<TokenItem> {
-  return new Promise<TokenItem>((resolve, reject) => {
-    axios.post(tokenAPI, {
-      ...account
-    }).then(function (response:any) {
-      if (response.status === 200) {
-        resolve(response.data)
-      } else {
-        reject()
-      }
-    }).catch(function (error) {
-      reject()
-    })
-  })
-}
-
-function reLoginUser (): Promise<RefreshItem> {
-  return new Promise<RefreshItem>((resolve, reject) => {
-    axios.post(refreshAPI, {
-    }).then(function (response:any) {
-      if (response.status === 200) {
-        resolve(response.data)
-      } else {
-        reject()
-      }
-    }).catch(function (error) {
-      reject()
-    })
-  })
-}
-
 function logoutUser (): Promise<MessageItem> {
   return new Promise<MessageItem>((resolve, reject) => {
-    axios.post(revokeAPI, { 
+    axios.delete(revokeAPI, { 
       headers: {
         ...authorizationOption()
       }

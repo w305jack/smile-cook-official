@@ -42,11 +42,11 @@
     <router-link to="/about">About</router-link>
   </div> -->
   <main role="main">
-    <div class="py-5 bg-light">    
+    <div class="py-3 bg-light">    
       <div class="container">
-        <div v-if="alert.show" class="row fade show">
+        <div class="row fade pb-2" :class="{ show: alert.show }">
           <div class="col-12">
-            <div class="alert" :class="alert.style" role="alert">
+            <div class="alert" :class="alert.style" role="alert" style="height: 50px;">
               {{alert.message}}
               <button @click.once="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -113,6 +113,11 @@ export default class AppView extends Vue {
   imageUrl: string = ''
 
   get alert () : AlertItem {
+    if ( (<any>this.$store.state).alert.show === true) {
+      setTimeout(() => {
+        this.closeAlert()
+      }, 5000)
+    } 
     return (<any>this.$store.state).alert
   }
 
@@ -124,8 +129,6 @@ export default class AppView extends Vue {
   routeChange (newVal: any, oldVal: any) {
     this.checkLogin()
   }
-
-
 
   checkLogin () {
     if (this.$store.state.isLogin) {

@@ -1,5 +1,6 @@
 class MutationTypes {
   public static readonly SET_LOGIN_REDIRECT = 'SET_LOGIN_REDIRECT'
+  public static readonly SET_ROUTE_MAP = 'SET_ROUTE_MAP'
   public static readonly SET_RECIPE_LIST = 'SET_RECIPE_LIST'
   public static readonly REQUEST_TOKEN = 'REQUEST_TOKEN'
   public static readonly SET_TOKEN = 'SET_TOKEN'
@@ -20,6 +21,7 @@ class MutationTypes {
 
 class ActionTypes {
   public static readonly LOGIN_REDIRECT = 'LOGIN_REDIRECT'
+  public static readonly CURRENT_ROUTE = 'CURRENT_ROUTE'
   public static readonly REGISTER = 'REGISTER'
   public static readonly LOGIN = 'LOGIN'
   public static readonly LOGOUT = 'LOGOUT'
@@ -34,6 +36,7 @@ class ActionTypes {
   public static readonly UNPUBLISH_RECIPE = 'UNPUBLISH_RECIPE'
   public static readonly GET_RECIPE = 'GET_RECIPE'
   public static readonly GET_USER_RECIPE_LIST = 'GET_USER_RECIPE_LIST'
+  public static readonly OPEN_ALERT = 'OPEN_ALERT'
   public static readonly CLOSE_ALERT = 'CLOSE_ALERT'
 }
 

@@ -65,9 +65,10 @@ export default class RegisterView extends Vue {
 
   submitProfile() {
     this.$store.dispatch('REGISTER', { profile: this.inputItem }).then((success)=>{
-      debugger
-      router.replace({ name: 'email-alert'})
-    })    
+      if (success) {
+        router.replace({ name: 'home'})
+      }
+    })
   }
 
   // checkPassword() {

@@ -57,30 +57,7 @@ const app = new Vue({
     // },
   },
 
-  beforeMount: function () : any {
-    // isLogin () {
-    //   debugger
-    //   return store.state.isLogin
-    // }
-    // isLogin: function(): boolean {
-    //   debugger
-    //   return this.$store.state.isLogin;
-    // },
-    // ...mapState({
-    //   isLogin: state => store.state.isLogin
-    // })
-    // ...mapState([
-    //   'isLogin',
-    // ]),
-    // debugger
-    // this.isLogin = this.$store.state.isLogin
-  },
-
-  watch: {
-    // checkLogin: function () {
-    //   return this.$store.state.isLogin;
-    // }
-  },
+  watch: { },
 
   render: h => h(App)
 

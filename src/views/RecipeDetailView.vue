@@ -89,12 +89,9 @@ export default class RecipeDetailView extends Vue {
     }      
   }
 
-
-
   get isAuthor () : boolean {
     return (this.$store.state.profile.username === this.username)
   }
-
 
   setUsername () {
     this.username = this.recipe.author.username

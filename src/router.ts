@@ -99,12 +99,13 @@ const router = new Router({
 })
 
 router.beforeEach ((to, from, next) => {
-  if (to.name === 'login') {
-    const loginRedirect = from.name || 'home'
-    store.dispatch(ActionTypes.LOGIN_REDIRECT, { loginRedirect: loginRedirect }).then((success)=>{
+  // if (to.name === 'login') {
+  //   const loginRedirect = from.name || 'home'
+  //   store.dispatch(ActionTypes.LOGIN_REDIRECT, { loginRedirect: loginRedirect }).then((success)=>{
+  //   })
+  // }
 
-    })
-  }
+  store.dispatch(ActionTypes.CURRENT_ROUTE, { routeMap: { to: to.name, from: from.name }})
 
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (isLoginStatus()) {
