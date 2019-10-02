@@ -11,9 +11,9 @@
       <div class="container">
         <div class="row" style="display: contents;">
           <div class="col-md-auto">
-            <a href="#" class="navbar-brand d-flex align-items-center">
+            <router-link :to="{ name: 'home'}" class="navbar-brand d-flex align-items-center">
               <strong>Smile Cook</strong>
-            </a>
+            </router-link>
           </div>
 
           <div class="col pt-1">
@@ -35,12 +35,7 @@
       </div>
     </div>
   </header>
-  <!-- <div id="nav">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
 
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div> -->
   <main role="main">
     <div class="py-3 bg-light">    
       <div class="container">
@@ -77,8 +72,6 @@
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  // text-align: center;
-  // color: #2c3e50;
 }
 #nav {
   padding: 30px;
@@ -94,9 +87,8 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
-// import UploadAvatar from '@/components/UploadAvatar.vue'
-import ProfileComponent from '@/components/ProfileComponent.vue'
 import { ActionTypes } from '@/constant'
+import ProfileComponent from '@/components/ProfileComponent.vue'
 
 @Component({
   components: {

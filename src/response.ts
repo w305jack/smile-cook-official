@@ -41,11 +41,16 @@ export interface RecipeListItem extends RecipeItem {
   updated_at: string
 }
 
+
+export interface LinksItem {
+  first: number,
+  last: number,
+  prev: boolean | null,
+  next: boolean | null
+}
+
 export interface PaginationItem {
-  has_next: boolean,
-  next_num: number | null,
-  has_prev: boolean,
-  prev_num: number | null,
+  links: LinksItem,
   page: number,
   pages: number,
   per_page: number,

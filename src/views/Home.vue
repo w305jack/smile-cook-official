@@ -1,18 +1,60 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <div class="row">
+      <div class="col-12 text-center">
+        <h1>Welcome to Smile Cook Demo Site !!!</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+      </div>
+      <div class="col-8">
+        <h3>Client</h3>
+        <p>You can test API here with clien side</p>
+      </div>
+      <div class="col">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+      </div>
+      <div class="col-8">
+        <h3>All route</h3>
+        <ul>
+          <li>/users</li>
+          <li>/users/{username}</li>
+          <li>/users/avatar</li>
+          <li>/users/{username}/recipes</li>
+          <li>/token</li>
+          <li>/refresh</li>
+          <li>/revoke</li>
+          <li>/recipes</li>
+          <li>/recipes/{recipe_id}</li>
+          <li>/recipes/{recipe_id}/publish</li>
+        </ul>
+      </div>      
+      <div class="col">
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import HelloWorld from '@/components/HelloWorld.vue' // @ is an alias to /src
 
-@Component({
-  components: {
-    HelloWorld
-  }
-})
+@Component
 export default class Home extends Vue {}
 </script>
+
+<style scoped lang="scss">
+h3 {
+  margin: 40px 0 0;
+  color: #42b983;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+</style>

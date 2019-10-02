@@ -13,25 +13,29 @@
             <div class="btn-group">
               <p>{{recipe.cook_time}} mins</p>
               <!-- <button type="button" class="btn btn-sm btn-outline-secondary">View</button> -->
-              <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
-            <!-- </div>
+  <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
+  <!-- </div>
             <small class="text-muted">{{recipe.created_at | formatDate}}</small>
           </div>
         </div>
       </div>
     </div>
   </div> -->
-<div class="row mb-2">
-  <SearchComponent />
-  <RecipeItemComponent v-for="recipeItem in recipes" :recipeItem="recipeItem" :key="recipeItem.id" />
-</div>
+  <div class="row mb-2">
+    <SearchComponent />
+    <RecipeItemComponent
+      v-for="recipeItem in recipes"
+      :recipeItem="recipeItem"
+      :key="recipeItem.id"
+    />
+  </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import RecipeItemComponent from '@/components/RecipeItemComponent.vue'
-import SearchComponent from '@/components/SearchComponent.vue'
-
+import { Component, Vue } from "vue-property-decorator";
+import RecipeItemComponent from "@/components/RecipeItemComponent.vue";
+import SearchComponent from "@/components/SearchComponent.vue";
+import { ActionTypes } from "@/constant";
 
 @Component({
   components: {
@@ -40,21 +44,26 @@ import SearchComponent from '@/components/SearchComponent.vue'
   }
 })
 export default class RecipeListView extends Vue {
-  page = 1
-  perPage = 9
-  sort = 'created_at'
-  order = 'desc'
+  page = 1;
+  perPage = 9;
+  sort = "created_at";
+  order = "desc";
 
-  get recipes () : Array<object> {
-    try{
+  get recipes(): Array<object> {
+    try {
       return (<any>this.$store.state).recipeList;
     } catch (e) {
-      return []
-    } 
+      return [];
+    }
   }
 
-  beforeMount () {
-    this.$store.dispatch('GET_RECIPE_LIST', { page: this.page, perPage: this.perPage, sort: this.sort, order: this.order }).then(() => {})
+  beforeMount() {
+    this.$store.dispatch(ActionTypes.GET_RECIPE_LIST, {
+      page: this.page,
+      perPage: this.perPage,
+      sort: this.sort,
+      order: this.order
+    });
   }
 }
 </script>
