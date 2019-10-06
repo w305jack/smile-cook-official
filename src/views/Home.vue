@@ -11,7 +11,7 @@
       </div>
       <div class="col-8">
         <h3>Client</h3>
-        <p>You can test API here with clien side</p>
+        <p>You can test API here with web side</p>
       </div>
       <div class="col">
       </div>
@@ -34,18 +34,15 @@
           <li>/recipes/{recipe_id}</li>
           <li>/recipes/{recipe_id}/publish</li>
         </ul>
-      </div>      
+      </div>
       <div class="col">
       </div>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+<script lang="ts" src="./home.ts">
 
-@Component
-export default class Home extends Vue {}
 </script>
 
 <style scoped lang="scss">

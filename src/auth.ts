@@ -1,34 +1,51 @@
-import * as localforage from "localforage";
+import * as localforage from 'localforage'
+
 import { store } from '@/store'
 
-store.getters.appSettings
-localforage.config(
-  {
-      driver: localforage.LOCALSTORAGE,
-      name: 'smile_sook',
-      storeName: 'auth_data',
-      version: 1.0,
-      description : ''
-  }
-)
+import { ActionTypes } from './store/aciton-types'
+import { MutationTypes } from './store/mutation-types'
 
-function cleanLocalForage(){
-  localforage.removeItem(AUTH_TYPE);
-  localforage.removeItem(FACEBOOK_AUTH_TOKEN);
-  localforage.removeItem(GOOGLE_AUTH_TOKEN);
+localforage.config({
+  driver: localforage.LOCALSTORAGE,
+  name: 'smile_cook',
+  storeName: 'auth_data',
+  version: 1.0,
+  description: ''
+})
+
+function authStatusCheck() {
+  localforage
+    .getItem('_ACCESS_TOKEN')
+    .then(accessToken => {
+      if (!!accessToken) {
+        store.commit(MutationTypes.SET_TOKEN, {
+          token: accessToken,
+          status: 'access'
+        })
+        store.dispatch(ActionTypes.GET_USER, { username: 'me' }).then(() => {
+          if (!store.state.isLogin) {
+            localforage.removeItem('_ACCESS_TOKEN')
+            localforage.removeItem('_REFRESH_TOKEN')
+          }
+          // localforage.getItem('_REFRESH_TOKEN').then(refreshToken => {
+          //   if (!!refreshToken && !store.state.isLogin) {
+          //     debugger
+          //     store.commit(MutationTypes.SET_TOKEN, {
+          //       token: refreshToken,
+          //       status: 'refresh'
+          //     })
+          //     store.dispatch(ActionTypes.GET_USER, { username: 'me' }).then(()=> {
+          //       throw Error('')
+          //     })
+          //   }
+          // })
+        })
+      }
+    })
+    .catch(error => {
+      localforage.removeItem('_ACCESS_TOKEN')
+      localforage.removeItem('_REFRESH_TOKEN')
+    })
 }
 
-
-function authStatusCheck () : boolean | any {
-  localforage.getItem('access_token').then((access_token)=>{
-    
-  }).catch(()=>{
-    return false
-  })
-}
-
-function isLoginStatus () : boolean {
-  return store.state.isLogin === true
-}
-
-export { authStatusCheck, localforage, isLoginStatus }
+export { authStatusCheck, localforage }

@@ -1,20 +1,19 @@
+import { DropdownPlugin } from 'bootstrap-vue'
+import moment from 'moment'
 import Vue from 'vue'
 import VueHead from 'vue-head'
+
+import store from '@/store'
+
 import App from './App.vue'
 import { router } from './router'
-import { mapState } from 'vuex'
-import { store } from './store'
-import moment from 'moment'
-import { Component, Prop } from 'vue-property-decorator'
-
-import RecipeList from '@/components/RecipeList.vue'
-import HelloWorld from '@/components/HelloWorld.vue'
 
 Vue.config.productionTip = false
 
 Vue.use(VueHead)
+Vue.use(DropdownPlugin)
 
-Vue.filter('formatDate', function (value: string) {
+Vue.filter('formatDate', function(value: string) {
   if (value) {
     return moment(String(value)).format('MM/DD/YYYY')
   }
@@ -32,33 +31,24 @@ const app = new Vue({
 
     link: [
       {
-        rel: 'stylesheet', href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'
+        rel: 'stylesheet',
+        href:
+          'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'
+      }
+    ],
+    script: [
+      {
+        type: 'text/javascript',
+        src: 'https://kit.fontawesome.com/4ae37ebd2b.js'
       }
     ]
   },
 
-  data: {
-    // isLogin: false
-  },
+  data: {},
 
-  // props: [
-  //   'isLogin'
-  // ],
-  // computed: {
-  //   isLoggin: function(): boolean {
-  //     return this.isLogin === true;
-  //   },
-  // },
+  methods: {},
 
-  methods: {
-    // checkLogin: function(): boolean {
-    //   debugger
-    //   return this.isLogin === true;
-    // },
-  },
-
-  watch: { },
+  watch: {},
 
   render: h => h(App)
-
 }).$mount('#app')

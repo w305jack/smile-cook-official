@@ -1,17 +1,20 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
-import RecipeListView from '@/views/RecipeListView.vue'
-import RegisterView from '@/views/RegisterView.vue'
-import EmailAlertView from '@/views/EmailAlertView.vue'
-import LoginView from '@/views/LoginView.vue'
-import RecipePanelView from '@/views/RecipePanelView.vue'
-import MyRecipeListView from '@/views/MyRecipeListView.vue'
-import RecipeDetailView from '@/views/RecipeDetailView.vue'
-import AuthorView from '@/views/AuthorView.vue'
-import { authStatusCheck, isLoginStatus } from '@/auth'
+
 import { store } from '@/store'
-import { ActionTypes } from '@/constant'
+import { ActionTypes } from '@/store/aciton-types'
+import LoginView from '@/views/account/login-view.vue'
+import RegisterView from '@/views/account/register-view.vue'
+import MyRecipeListView from '@/views/author/my-recipe-list-view.vue'
+import RecipePanelView from '@/views/author/recipe-panel-view.vue'
+import InternalServerErrorView from '@/views/general/internal-server-error-view.vue'
+import NotFoundView from '@/views/general/not-found-view.vue'
+import AuthorView from '@/views/recipe/author-recipe-list-view.vue'
+import RecipeDetailView from '@/views/recipe/recipe-detail-view.vue'
+import RecipeListView from '@/views/recipe/recipe-list-view.vue'
+
+import { authStatusCheck } from './auth'
+import Home from './views/home.vue'
 
 Vue.use(Router)
 
@@ -56,11 +59,6 @@ const router = new Router({
       component: RegisterView
     },
     {
-      path: '/email-alert',
-      name: 'email-alert',
-      component: EmailAlertView
-    },
-    {
       path: '/login',
       name: 'login',
       component: LoginView
@@ -78,29 +76,30 @@ const router = new Router({
       name: 'author',
       component: AuthorView
     },
-    // {
-    //   name: 'not-found-wildcard',
-    //   path: '*',
-    //   component: NotFoundView,
-    //   meta: {
-    //       scrollToTop: true,
-    //       mobileAlternative: 'mobile-not-found'
-    //   }
-    // }
+    {
+      path: '*',
+      name: 'not-found',
+      component: NotFoundView
+    },
+    {
+      path: '*',
+      name: 'internal-server-error',
+      component: InternalServerErrorView
+    }
   ]
 })
 
-router.beforeEach ((to, from, next) => {
-  // if (to.name === 'login') {
-  //   const loginRedirect = from.name || 'home'
-  //   store.dispatch(ActionTypes.LOGIN_REDIRECT, { loginRedirect: loginRedirect }).then((success)=>{
-  //   })
-  // }
+router.beforeEach((to, from, next) => {
+  store.dispatch(ActionTypes.CURRENT_ROUTE, {
+    routeMap: { to: to, from: from }
+  })
 
-  store.dispatch(ActionTypes.CURRENT_ROUTE, { routeMap: { to: to.name, from: from.name }})
+  if (!store.state.isLogin) {
+    authStatusCheck()
+  }
 
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (isLoginStatus()) {
+    if (store.state.isLogin) {
       next()
     } else {
       next({
@@ -111,21 +110,6 @@ router.beforeEach ((to, from, next) => {
   } else {
     next()
   }
-
-
-  // if (to.matched.some(record => record.meta.requireAuth)) {
-  //   oauthRequiredAction((beenAuth) => {
-  //     if(beenAuth) {
-  //         next()
-  //     } else {
-  //         router.app.$store.commit(StoreTypes.MutationTypes.SET_LOGIN_STATUS, { loginStatus: false, userProfile:null })
-  //         router.replace({ name: 'landing-page'})
-  //     }
-  //   })
-  // } else {
-  //   next()
-  // }
-
 })
 
 export { router }
