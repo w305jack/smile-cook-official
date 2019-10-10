@@ -9,12 +9,12 @@ import MyRecipeListView from '@/views/author/my-recipe-list-view.vue'
 import RecipePanelView from '@/views/author/recipe-panel-view.vue'
 import InternalServerErrorView from '@/views/general/internal-server-error-view.vue'
 import NotFoundView from '@/views/general/not-found-view.vue'
+import Home from '@/views/home.vue'
 import AuthorView from '@/views/recipe/author-recipe-list-view.vue'
 import RecipeDetailView from '@/views/recipe/recipe-detail-view.vue'
 import RecipeListView from '@/views/recipe/recipe-list-view.vue'
 
 import { authStatusCheck } from './auth'
-import Home from './views/home.vue'
 
 Vue.use(Router)
 
