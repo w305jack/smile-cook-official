@@ -41,7 +41,7 @@
   </div>
 </template>
 
-<script lang="ts" src="./home.ts">
+<script lang="ts" src="@/views/home.ts">
 
 </script>
 
