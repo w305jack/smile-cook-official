@@ -9,7 +9,7 @@
       <!-- <img width="100px" height="100px" :src="author.avatar_url" class="mr-3" alt=""> -->
       <div class="media-body">
         <h3 class="mt-0">{{author.username}}</h3>
-        <p class="text-muted">join smile cook on {{author.created_at | formatDate}}.</p>
+        <p class="text-muted">join smilecook on {{author.created_at | formatDate}}.</p>
       </div>
     </div>
   </div>

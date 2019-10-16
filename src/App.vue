@@ -24,7 +24,7 @@
                 :to="{ name: 'home'}"
                 class="navbar-brand d-flex align-items-center"
               >
-                <strong>Smile Cook</strong>
+                <strong>Smilecook</strong>
               </router-link>
             </div>
 
@@ -95,7 +95,7 @@
         <p class="float-right">
           <a href="#">Back to top</a>
         </p>
-        <p>Copyright © 2019 Smile Cook, take a smile and be relax for yourself!</p>
+        <p>Copyright © 2019 Smilecook, take a smile and be relax for yourself!</p>
       </div>
     </footer>
   </div>

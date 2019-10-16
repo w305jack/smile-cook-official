@@ -2,7 +2,7 @@
   <div class="home">
     <div class="row">
       <div class="col-12 text-center">
-        <h1>Welcome to Smile Cook Demo Site !!!</h1>
+        <h1>Welcome to Smilecook Demo Site !!!</h1>
       </div>
     </div>
 
