@@ -1,13 +1,13 @@
 {
-  "name": "smile-cook-official",
+  "name": "smilecook-official",
   "version": "0.1.0",
-  "description": "The Front-end for smile cook API",
+  "description": "The Front-end for smilecook API",
   "author": "Jack Huang",
   "license": "MIT",
   "private": true,
   "repository": {
     "type" : "git",
-    "url" : "https://github.com/w305jack/smile-cook-official.git"
+    "url" : "https://github.com/w305jack/smilecook-vuejs.git"
   },
   "scripts": {
     "serve": "vue-cli-service serve",
