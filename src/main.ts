@@ -26,7 +26,7 @@ const app = new Vue({
 
   head: {
     title: {
-      inner: 'Smile Cook'
+      inner: 'Smilecook'
     },
 
     link: [
