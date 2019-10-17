@@ -13,16 +13,16 @@ localforage.config({
   description: ''
 })
 
-function authStatusCheck() {
+function authStatusCheck () {
   localforage
     .getItem('_ACCESS_TOKEN')
     .then(accessToken => {
-      if (!!accessToken) {
+      if (accessToken) {
         store.commit(MutationTypes.SET_TOKEN, {
           token: accessToken,
           status: 'access'
         })
-        store.dispatch(ActionTypes.GET_USER, { username: 'me' }).then(() => {
+        store.dispatch(ActionTypes.GET_USER).then(() => {
           if (!store.state.isLogin) {
             localforage.removeItem('_ACCESS_TOKEN')
             localforage.removeItem('_REFRESH_TOKEN')

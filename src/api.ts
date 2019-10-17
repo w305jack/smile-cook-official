@@ -13,6 +13,8 @@ const userAPI = `${API_HOST}users/{username}`
 const userAvatarAPI = `${API_HOST}users/avatar`
 const userRecipesListAPI = `${API_HOST}users/{username}/recipes`
 
+const meAPI = `${API_HOST}me`
+
 const tokenAPI = `${API_HOST}token`
 const refreshAPI = `${API_HOST}refresh`
 const revokeAPI = `${API_HOST}revoke`
@@ -24,7 +26,7 @@ const recipeCoverUploadAPI = `${API_HOST}recipes/{recipeId}/cover`
 
 function authorizationOption (): Object {
   // if (Object.keys(store.state.header).length !== 0) {
-  if (!!store.state.tokenData.token) {
+  if (store.state.tokenData.token) {
     return {
       Authorization: `Bearer ${store.state.tokenData.token}`
     }
@@ -39,7 +41,7 @@ function registerUser (profile: object): Promise<AxiosResponse> {
       .post(userListAPI, {
         ...profile
       })
-      .then(function(response: AxiosResponse) {
+      .then(function (response: AxiosResponse) {
         if (response.status === 201) {
           resolve(response)
         } else {
@@ -58,7 +60,8 @@ function loginUser (account: object): Promise<TokenItem> {
       .post(tokenAPI, {
         ...account
       })
-      .then(function(response: AxiosResponse) {
+      .then(function (response: AxiosResponse) {
+        debugger
         if (response.status === 200) {
           resolve(response.data)
         } else {
@@ -66,6 +69,7 @@ function loginUser (account: object): Promise<TokenItem> {
         }
       })
       .catch(error => {
+        debugger
         reject(error.response)
       })
   })
@@ -75,7 +79,7 @@ function reLoginUser (): Promise<RefreshItem> {
   return new Promise<RefreshItem>((resolve, reject) => {
     axios
       .post(refreshAPI, {})
-      .then(function(response: any) {
+      .then(function (response: any) {
         if (response.status === 200) {
           resolve(response.data)
         } else {
@@ -88,6 +92,27 @@ function reLoginUser (): Promise<RefreshItem> {
   })
 }
 
+function getMe (): Promise<UserItem> {
+  return new Promise<UserItem>((resolve, reject) => {
+    axios
+      .get(meAPI, {
+        headers: {
+          ...authorizationOption()
+        }
+      })
+      .then(function (response: AxiosResponse) {
+        if (response.status === 200) {
+          resolve(response.data)
+        } else {
+          reject(response)
+        }
+      })
+      .catch(error => {
+        reject(error.response)
+      })
+  })
+}
+
 function getUser (username: string): Promise<UserItem> {
   return new Promise<UserItem>((resolve, reject) => {
     axios
@@ -96,7 +121,7 @@ function getUser (username: string): Promise<UserItem> {
           ...authorizationOption()
         }
       })
-      .then(function(response: AxiosResponse) {
+      .then(function (response: AxiosResponse) {
         if (response.status === 200) {
           resolve(response.data)
         } else {
@@ -120,7 +145,7 @@ function uploadUserAvatar (file: File): Promise<AvatarItem> {
           ...authorizationOption()
         }
       })
-      .then(function(response: AxiosResponse) {
+      .then(function (response: AxiosResponse) {
         if (response.status === 200) {
           resolve(response.data)
         } else {
@@ -151,7 +176,7 @@ function getUserRecipeList (
           ...authorizationOption()
         }
       })
-      .then(function(response: AxiosResponse) {
+      .then(function (response: AxiosResponse) {
         if (response.status >= 200 && response.status < 300) {
           resolve(response.data)
         } else {
@@ -172,9 +197,9 @@ function logoutUser (): Promise<MessageItem> {
           ...authorizationOption()
         }
       })
-      .then(function(response: any) {
+      .then(function (response: any) {
         if (response.status === 200) {
-          resolve({message: ''})
+          resolve({ message: '' })
         } else {
           reject(true)
         }
@@ -385,6 +410,7 @@ export {
   loginUser,
   reLoginUser,
   logoutUser,
+  getMe,
   getUser,
   uploadUserAvatar,
   getUserRecipeList,

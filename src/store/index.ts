@@ -83,7 +83,7 @@ const store = new Vuex.Store({
             status: 'access'
           })
           commit(MutationTypes.SET_LOGIN_STATUS, true)
-          dispatch(ActionTypes.GET_USER, { username: 'me' })
+          dispatch(ActionTypes.GET_USER)
 
           resolve(resp)
         }, errorHandler)

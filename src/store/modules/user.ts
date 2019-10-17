@@ -47,10 +47,10 @@ const userStore: Module<any, any> = {
       }, errorHandler)
     },
 
-    [ActionTypes.GET_USER]: ({ commit, dispatch, state }, { username }) => {
+    [ActionTypes.GET_USER]: ({ commit, dispatch, state }) => {
       commit(MutationTypes.REQUEST_USER)
       return api
-        .getUser(username)
+        .getMe()
         .then(resp => {
           commit(MutationTypes.SET_USER, { resp })
           commit(MutationTypes.SET_LOGIN_STATUS, true)
