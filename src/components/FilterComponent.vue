@@ -91,7 +91,7 @@
           variant="outline-secondary"
         >
           <b-dropdown-item
-            v-for="item in orderByStrList"
+            v-for="item in orderByStrList" v-bind:key="item.order"
             :active="item.sort === listParams.sort && item.order === listParams.order"
             @click.stop="(listParams.sort !== item.sort || listParams.order !== item.order ) ? onChangeOrderBy(item.sort, item.order): false"
           >{{item.str}}</b-dropdown-item>
