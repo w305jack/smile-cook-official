@@ -17,7 +17,7 @@ function authStatusCheck () {
   localforage
     .getItem('_ACCESS_TOKEN')
     .then(accessToken => {
-      if (accessToken) {
+      if (!!accessToken) {
         store.commit(MutationTypes.SET_TOKEN, {
           token: accessToken,
           status: 'access'
@@ -42,7 +42,7 @@ function authStatusCheck () {
         })
       }
     })
-    .catch(error => {
+    .catch(() => {
       localforage.removeItem('_ACCESS_TOKEN')
       localforage.removeItem('_REFRESH_TOKEN')
     })

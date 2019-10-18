@@ -36,7 +36,6 @@ const store = new Vuex.Store({
       hasConfirmButton: false,
       hasCancelButton: false,
       callback: () => {
-        return
       }
     }
   },
@@ -148,7 +147,6 @@ const store = new Vuex.Store({
         hasConfirmButton: false,
         hasCancelButton: false,
         callback: () => {
-          return
         }
       }
     },

@@ -6,6 +6,7 @@ import store from '@/store'
 import { ActionTypes } from '@/store/aciton-types'
 
 const errorHandler = (response: AxiosResponse | boolean): any => {
+  debugger
   if (typeof response === 'boolean') {
     router.replace({ name: 'internal-server-error' })
   } else {
@@ -25,7 +26,7 @@ const errorHandler = (response: AxiosResponse | boolean): any => {
         }
 
       case HttpStatus.UNAUTHORIZED:
-        if (store.state.routeMap.to === 'login' && !!response.data.message) {
+        if (store.state.routeMap.to.name === 'login' && !!response.data.message) {
           store.dispatch(ActionTypes.OPEN_ALERT, {
             alert: {
               show: true,
@@ -36,7 +37,7 @@ const errorHandler = (response: AxiosResponse | boolean): any => {
         } else {
           try {
             if (
-              (<any>router).history.current.meta.requiresAuth ||
+              (<any> router).history.current.meta.requiresAuth ||
               (!!response.data && response.data.message === 'Token has expired')
             ) {
               store.dispatch(ActionTypes.OPEN_ALERT, {
@@ -63,6 +64,15 @@ const errorHandler = (response: AxiosResponse | boolean): any => {
         break
 
       case HttpStatus.FORBIDDEN:
+        if (store.state.routeMap.to.name === 'login' && !!response.data.message) {
+          store.dispatch(ActionTypes.OPEN_ALERT, {
+            alert: {
+              show: true,
+              message: response.data.message,
+              style: 'alert-danger'
+            }
+          })
+        }
         router.replace({ name: 'not-found' })
         break
 
@@ -75,8 +85,16 @@ const errorHandler = (response: AxiosResponse | boolean): any => {
         break
 
       case HttpStatus.TOO_MANY_REQUESTS:
+        store.dispatch(ActionTypes.OPEN_ALERT, {
+          alert: {
+            show: true,
+            message:
+              'Too many request',
+            style: 'alert-danger'
+          }
+        })
         break
-      // too many request
+        // too many request
 
       case HttpStatus.INTERNAL_SERVER_ERROR:
         router.replace({ name: 'internal-server-error' })

@@ -24,17 +24,17 @@ export default class AppView extends Vue {
   imageUrl: string = ''
 
   get alert (): AlertItem {
-    if ((<any>this.$store.state).alert.show === true) {
+    if ((<any> this.$store.state).alert.show === true) {
       setTimeout(() => {
         this.closeAlert()
       }, 5000)
     }
-    return (<any>this.$store.state).alert
+    return (<any> this.$store.state).alert
   }
 
   get isLogin () {
     try {
-      return (<any>this.$store.state).isLogin
+      return (<any> this.$store.state).isLogin
     } catch (error) {
       return false
     }
@@ -45,7 +45,7 @@ export default class AppView extends Vue {
   }
 
   @Watch('$route')
-  routeChange(newVal: any, oldVal: any) {
+  routeChange (newVal: any, oldVal: any) {
     // this.checkLogin();
   }
 
