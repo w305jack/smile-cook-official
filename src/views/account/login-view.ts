@@ -39,10 +39,7 @@ export default class LoginView extends Vue {
     this.$store
       .dispatch(ActionTypes.LOGIN, { account: this.inputItem })
       .then(success => {
-        this.$router.push({
-          name: this.$store.state.routeMap.from.name || 'home',
-          params: this.$store.state.routeMap.from.params
-        })
+        this.$router.push({name: 'home'})
       })
   }
 

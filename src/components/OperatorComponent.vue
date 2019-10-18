@@ -120,6 +120,7 @@ export default class OperatorComponent extends Vue {
       .dispatch(ActionTypes.DELETE_RECIPE, { recipeId: this.recipeId })
       .then(() => {
         this.$store.dispatch(ActionTypes.CLOSE_DIALOG);
+        this.$router.replace({name: 'my-recipes'})
       });
   }
 

@@ -292,10 +292,10 @@ function updateRecipe (recipe: RecipeItem): Promise<RecipeListItem> {
   })
 }
 
-function deleteRecipe (recipe: RecipeItem): Promise<boolean> {
+function deleteRecipe (recipeId: string): Promise<boolean> {
   return new Promise<boolean>((resolve, reject) => {
     axios
-      .delete(recipeAPI.replace('{recipeId}', String(recipe.id)), {
+      .delete(recipeAPI.replace('{recipeId}', recipeId), {
         headers: {
           ...authorizationOption()
         }
