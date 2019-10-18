@@ -65,8 +65,16 @@ const recipeStore: Module<any, any> = {
 
     [ActionTypes.DELETE_RECIPE]: ({ commit }, { recipeId }) => {
       return api.deleteRecipe(recipeId).then(resp => {
-        commit(MutationTypes.SET_RECIPE_DETAIL, {})
+        commit(MutationTypes.SET_RECIPE_DETAIL, { resp: <RecipeItem>{
+          author: {}
+        }})
       }, errorHandler)
+    },
+
+    [ActionTypes.RESET_RECIPE]: ({ commit }) => {
+      commit(MutationTypes.SET_RECIPE_DETAIL, { resp: <RecipeItem>{
+        author: {}
+      }})
     },
 
     [ActionTypes.PUBLISH_RECIPE]: ({ commit }, { recipeId }) => {

@@ -18,7 +18,7 @@
       <!-- pagination block -->
       <div
         class="col-4 ml-0"
-        v-show="enablePagination"
+        v-show="enablePagination && !!pagination.total"
       >
         <nav>
           <ul class="pagination mt-3">
@@ -64,7 +64,7 @@
       <!-- order by block -->
       <div
         class="col-5 mt-auto mb-auto p-2"
-        v-show="enableDisplay || enableVisibility"
+        v-show="(enableDisplay || enableVisibility) && !!pagination.total"
       >
         <b-dropdown
           v-show="enableDisplay"

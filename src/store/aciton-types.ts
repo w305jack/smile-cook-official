@@ -11,6 +11,7 @@ export class ActionTypes {
   public static readonly CREATE_RECIPE = 'CREATE_RECIPE'
   public static readonly UPDATE_RECIPE = 'UPDATE_RECIPE'
   public static readonly DELETE_RECIPE = 'DELETE_RECIPE'
+  public static readonly RESET_RECIPE = 'RESET_RECIPE'
   public static readonly PUBLISH_RECIPE = 'PUBLISH_RECIPE'
   public static readonly UNPUBLISH_RECIPE = 'UNPUBLISH_RECIPE'
   public static readonly UPLOAD_COVER = 'UPLOAD_COVER'

@@ -30,7 +30,7 @@ export default class RecipePanelView extends Vue {
 
   // uploading: string = 'w-0';
   originImage: string =
-    (<any>this.$store.state).recipeStore.recipeDetail.cover_url ||
+    (<any> this.$store.state).recipeStore.recipeDetail.cover_url ||
     APIHost() + 'static/images/assets/default-recipe-cover.jpg'
   newImage: string = ''
   imageName: string = 'Choose file...'
@@ -39,7 +39,7 @@ export default class RecipePanelView extends Vue {
 
   mode: string = 'create'
 
-  get recipeId(): string | null {
+  get recipeId (): string | null {
     try {
       return this.$route.params['recipeId']
     } catch (error) {
@@ -47,7 +47,7 @@ export default class RecipePanelView extends Vue {
     }
   }
 
-  checkForm() {
+  checkForm () {
     this.nameValidated = !!this.inputItem.name
     this.numOfServingsValidated =
       !!this.inputItem.num_of_servings &&
@@ -61,10 +61,16 @@ export default class RecipePanelView extends Vue {
       this.cookTimeValidated
     ) {
       this.submitRecipe()
+      return
     }
+
+    window.scrollTo({
+      left: (<any> document.getElementById('name')).offsetLeft || 0,
+      top:  (<any> document.getElementById('name')).offsetTop || 0
+    })
   }
 
-  onImageChange(event: HTMLInputEvent) {
+  onImageChange (event: HTMLInputEvent) {
     const files = event.target.files || null
     if (files === null) {
       return
@@ -77,7 +83,7 @@ export default class RecipePanelView extends Vue {
     this.loadImage(files[0])
   }
 
-  isValidFileExtension(file: File) {
+  isValidFileExtension (file: File) {
     const MimeTypes = [
       'image/jpeg',
       'image/png',
@@ -99,7 +105,7 @@ export default class RecipePanelView extends Vue {
   //   }
   // }
 
-  loadImage(file: File) {
+  loadImage (file: File) {
     var reader = new FileReader()
 
     if (this.isValidFileExtension(file)) {
@@ -119,7 +125,7 @@ export default class RecipePanelView extends Vue {
     }
   }
 
-  submitCover(recipeId: string) {
+  submitCover (recipeId: string) {
     if (this.isUpload && !!recipeId) {
       this.$store
         .dispatch(ActionTypes.UPLOAD_COVER, {
@@ -131,7 +137,7 @@ export default class RecipePanelView extends Vue {
             this.$store.dispatch(ActionTypes.OPEN_ALERT, {
               alert: {
                 show: true,
-                message: 'Create success!!',
+                message: 'Update success!!',
                 style: 'alert-success'
               }
             })
@@ -156,7 +162,7 @@ export default class RecipePanelView extends Vue {
     }
   }
 
-  submitRecipe() {
+  submitRecipe () {
     const recipe = {
       id: this.inputItem.id || null,
       name: this.inputItem.name,
@@ -188,38 +194,46 @@ export default class RecipePanelView extends Vue {
     }
   }
 
-  fetchRecipe() {
+  initCreate () {
+    this.inputItem = <InputItem>{}
+    this.nameValidated = true
+    this.numOfServingsValidated = true
+    this.cookTimeValidated = true
+    this.imageValidated = true
+    this.isUpload = false
+    this.originImage =
+      APIHost() + 'static/images/assets/default-recipe-cover.jpg'
+  }
+
+  fetchRecipe () {
     if (
-      String((<any>this.$store.state).recipeStore.recipeDetail.id) !==
+      String((<any> this.$store.state).recipeStore.recipeDetail.id) !==
       this.recipeId
     ) {
       this.$store
         .dispatch(ActionTypes.GET_RECIPE, { recipeId: this.recipeId })
         .then(success => {
-          this.inputItem = (<any>this.$store.state).recipeStore.recipeDetail
+          this.inputItem = (<any> this.$store.state).recipeStore.recipeDetail
         })
     }
   }
 
   @Watch('$route')
-  routeChange(newVal: any, oldVal: any) {
+  routeChange (newVal: any, oldVal: any) {
     if (newVal.name === 'create-recipe') {
       this.mode = 'create'
-      this.inputItem = <InputItem>{}
-      this.nameValidated = true
-      this.numOfServingsValidated = true
-      this.cookTimeValidated = true
-      this.imageValidated = true
-      this.isUpload = false
-      this.originImage =
-        APIHost() + 'static/images/assets/default-recipe-cover.jpg'
+      this.initCreate()
     }
   }
 
-  beforeMount() {
+  beforeMount () {
     if (this.$route.name === 'edit-recipe') {
       this.mode = 'edit'
       this.fetchRecipe()
+    } else {
+      this.$store.dispatch(ActionTypes.RESET_RECIPE)
+      this.mode = 'create'
+      this.initCreate()
     }
   }
 }

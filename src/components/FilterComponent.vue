@@ -18,7 +18,7 @@
       <!-- pagination block -->
       <div
         class="col-4 ml-0"
-        v-show="enablePagination"
+        v-show="enablePagination && !!pagination.total"
       >
         <nav>
           <ul class="pagination mt-3">
@@ -64,7 +64,7 @@
       <!-- order by block -->
       <div
         class="col-5 mt-auto mb-auto p-2"
-        v-show="enableOrderBy || enableDisplay"
+        v-show="(enableOrderBy || enableDisplay) && !!pagination.total"
       >
         <b-dropdown
           v-show="enableDisplay"
@@ -101,7 +101,7 @@
       <!-- search block -->
       <div
         class="col-3 input-group p-3"
-        v-show="enableSearch"
+        v-show="enableSearch && !!pagination.total"
       >
         <input
           v-model="inputItem.q"
