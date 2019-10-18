@@ -77,12 +77,12 @@ const router = new Router({
       component: AuthorView
     },
     {
-      path: '*',
+      path: '/not-found',
       name: 'not-found',
       component: NotFoundView
     },
     {
-      path: '*',
+      path: '/internal-server-error',
       name: 'internal-server-error',
       component: InternalServerErrorView
     }

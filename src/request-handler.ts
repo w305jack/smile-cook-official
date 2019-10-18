@@ -6,7 +6,6 @@ import store from '@/store'
 import { ActionTypes } from '@/store/aciton-types'
 
 const errorHandler = (response: AxiosResponse | boolean): any => {
-  debugger
   if (typeof response === 'boolean') {
     router.replace({ name: 'internal-server-error' })
   } else {

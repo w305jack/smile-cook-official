@@ -27,6 +27,7 @@
           <li>/users/{username}</li>
           <li>/users/avatar</li>
           <li>/users/{username}/recipes</li>
+          <li>/me</li>
           <li>/token</li>
           <li>/refresh</li>
           <li>/revoke</li>

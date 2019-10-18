@@ -81,7 +81,7 @@
               <img
                 v-show="!isUpload"
                 class="img-fluid"
-                :src="originImage"
+                :src="originImage || '@/assets/default-recipe-cover.jpg'"
               />
               <img
                 v-show="isUpload"

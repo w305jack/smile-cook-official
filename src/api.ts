@@ -61,7 +61,6 @@ function loginUser (account: object): Promise<TokenItem> {
         ...account
       })
       .then(function (response: AxiosResponse) {
-        debugger
         if (response.status === 200) {
           resolve(response.data)
         } else {
@@ -69,7 +68,6 @@ function loginUser (account: object): Promise<TokenItem> {
         }
       })
       .catch(error => {
-        debugger
         reject(error.response)
       })
   })

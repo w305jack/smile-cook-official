@@ -33,7 +33,7 @@ export default class MyRecipeListView extends Vue {
   }
 
   beforeMount () {
-    if (!this.$store.state.isLogin || !this.username) {
+    if (!this.$store.state.isLogin || !!!this.username) {
       this.$router.push({ name: 'login' })
     }
     this.$store.dispatch(ActionTypes.GET_USER_RECIPE_LIST, {

@@ -30,8 +30,7 @@ export default class RecipePanelView extends Vue {
 
   // uploading: string = 'w-0';
   originImage: string =
-    (<any> this.$store.state).recipeStore.recipeDetail.cover_url ||
-    APIHost() + 'static/images/assets/default-recipe-cover.jpg'
+    (<any> this.$store.state).recipeStore.recipeDetail.cover_url
   newImage: string = ''
   imageName: string = 'Choose file...'
 

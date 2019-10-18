@@ -1,4 +1,4 @@
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 
 import { ActionTypes } from '@/store/aciton-types'
 import { validEmail } from '@/validation'
@@ -14,6 +14,16 @@ export default class LoginView extends Vue {
   showValidated = false
   emailValidated = true
   passwordValidated = true
+  checkLoginStatus = false
+
+  get loginStatus () : boolean{
+    return this.$store.state.isLogin
+  }
+
+  @Watch('loginStatus')
+  change () {
+    this.checkLoginStatus = this.loginStatus
+  }
 
   formCheck () {
     this.emailValidated =
@@ -37,10 +47,12 @@ export default class LoginView extends Vue {
   }
 
   beforeMount () {
-    if (!! this.$store.state.isLogin) {
-      this.$router.push({
-        name: 'home'
-      })
-    }
+    setTimeout(() => {
+      if (!! this.$store.state.isLogin) {
+        this.$router.push({
+          name: 'home'
+        })
+      }
+    }, 1000)
   }
 }

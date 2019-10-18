@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12" v-show="!checkLoginStatus">
       <h4 class="py-3 text-center">Login</h4>
 
       <form

@@ -26,10 +26,11 @@ function authStatusCheck () {
           if (!store.state.isLogin) {
             localforage.removeItem('_ACCESS_TOKEN')
             localforage.removeItem('_REFRESH_TOKEN')
+          } else {
+            store.commit(MutationTypes.SET_LOGIN_STATUS, true)
           }
           // localforage.getItem('_REFRESH_TOKEN').then(refreshToken => {
           //   if (!!refreshToken && !store.state.isLogin) {
-          //     debugger
           //     store.commit(MutationTypes.SET_TOKEN, {
           //       token: refreshToken,
           //       status: 'refresh'
@@ -45,6 +46,7 @@ function authStatusCheck () {
     .catch(() => {
       localforage.removeItem('_ACCESS_TOKEN')
       localforage.removeItem('_REFRESH_TOKEN')
+      store.commit(MutationTypes.SET_LOGIN_STATUS, false)
     })
 }
 

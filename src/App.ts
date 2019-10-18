@@ -6,8 +6,6 @@ import ProfileComponent from '@/components/ProfileComponent.vue'
 import { AlertItem } from '@/response'
 import { ActionTypes } from '@/store/aciton-types'
 
-import { authStatusCheck } from './auth'
-
 @Component({
   components: {
     ProfileComponent,
