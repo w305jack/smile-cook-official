@@ -1,10 +1,10 @@
 export function APIHost(): string {
-  console.log('env:' + process.env.NODE_ENV)
-  console.log('host:' + process.env.HOST)
-  console.log('test:' + process.env.TEST)
-
   if (!!process.env.NODE_ENV) {
+    const dotenv = require('dotenv');
+    dotenv.config();
+
     return process.env.HOST
+
   } else {
     return '/api/'
   }  
