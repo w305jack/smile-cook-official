@@ -200,8 +200,11 @@ export default class RecipePanelView extends Vue {
     this.cookTimeValidated = true
     this.imageValidated = true
     this.isUpload = false
-    this.originImage =
-      APIHost() + 'static/images/assets/default-recipe-cover.jpg'
+    this.originImage = require("@/static/images/default-recipe-cover.jpg")
+  }
+
+  get publicPath () {
+    return process.env.BASE_URL
   }
 
   fetchRecipe () {
