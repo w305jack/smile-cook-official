@@ -6,7 +6,7 @@ import {
 } from '@/response'
 import store from '@/store'
 
-import { APIHost } from '@/utils'
+// import { APIHost } from '@/utils'
 
 var API_HOST = '/api/'
 

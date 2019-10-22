@@ -10,8 +10,8 @@ app.use(serveStatic(__dirname + "/dist"));
 app.use(
   '/api/',
   proxy({ 
-    target: process.env.HOST, changeOrigin: true ,
-    pathRewrite: function (path, req) { return path.replace('/api/', process.env.HOST) }
+    target: process.env.API_URL, changeOrigin: true ,
+    pathRewrite: function (path, req) { return path.replace('/api/', process.env.API_URL) }
   })
 );
 
