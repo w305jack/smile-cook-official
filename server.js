@@ -3,6 +3,8 @@ var proxy = require('http-proxy-middleware');
 var path = require('path');
 var serveStatic = require('serve-static');
 
+console.log('URL:' + process.env.API_URL)
+
 app = express();
 app.use(serveStatic(__dirname + "/dist"));
 // app.use(
