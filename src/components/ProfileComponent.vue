@@ -61,7 +61,8 @@ export default class ProfileComponent extends Vue {
 
   logoutUser() {
     this.$store.dispatch(ActionTypes.LOGOUT).then(success => {
-      this.$router.push({ name: "home" });
+      console.log('logout success')
+      this.$router.replace({ name: "home" });
     });
   }
 
