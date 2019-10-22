@@ -13,7 +13,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start": "export HOST=$HOST && node server.js"
+    "start": "HOST=$HOST && TEST=$HOST && node server.js"
   },
   "dependencies": {
     "axios": "^0.19.0",
