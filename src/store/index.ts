@@ -91,18 +91,26 @@ const store = new Vuex.Store({
 
     [ActionTypes.LOGOUT]: ({ commit }) => {
       return new Promise((resolve, reject) => {
-        commit(MutationTypes.CLEAR_USER)
-        commit(MutationTypes.CLEAR_TOKEN)
-        commit(MutationTypes.SET_LOGIN_STATUS, false)
-
-        localforage.removeItem('_ACCESS_TOKEN')
-        localforage.removeItem('_REFRESH_TOKEN')
         api
           .logoutUser()
           .then(resp => {
+            commit(MutationTypes.CLEAR_USER)
+            commit(MutationTypes.CLEAR_TOKEN)
+            commit(MutationTypes.SET_LOGIN_STATUS, false)
+    
+            localforage.removeItem('_ACCESS_TOKEN')
+            localforage.removeItem('_REFRESH_TOKEN')
+
             resolve(true)
           })
           .catch(error => {
+            commit(MutationTypes.CLEAR_USER)
+            commit(MutationTypes.CLEAR_TOKEN)
+            commit(MutationTypes.SET_LOGIN_STATUS, false)
+    
+            localforage.removeItem('_ACCESS_TOKEN')
+            localforage.removeItem('_REFRESH_TOKEN')
+
             reject(error)
           })
       })
