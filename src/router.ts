@@ -85,6 +85,11 @@ const router = new Router({
       path: '/internal-server-error',
       name: 'internal-server-error',
       component: InternalServerErrorView
+    },
+    {
+      path: '*',
+      name: 'default',
+      component: NotFoundView
     }
   ]
 })
