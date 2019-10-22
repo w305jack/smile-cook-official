@@ -6,7 +6,9 @@ import {
 } from '@/response'
 import store from '@/store'
 
-var API_HOST = '/api/'
+import { APIHost } from '@/utils'
+
+var API_HOST = APIHost()
 
 const userListAPI = `${API_HOST}users`
 const userAPI = `${API_HOST}users/{username}`
