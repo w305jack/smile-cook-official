@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-process.env.VUE_APP_API_URL = require('../package.json').apiUrl
+const apiUrl = require('../package.json').apiUrl
 
 export function APIHost(): string {
   if (!!process.env.NODE_ENV) {
@@ -9,7 +9,7 @@ export function APIHost(): string {
 
     console.log('url:' + process.env.VUE_APP_API_URL)
 
-    return process.env.API_URL
+    return apiUrl
 
   } else {
     return '/api/'
