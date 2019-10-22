@@ -2,8 +2,10 @@ var express = require('express');
 var proxy = require('http-proxy-middleware');
 var path = require('path');
 var serveStatic = require('serve-static');
+var cors = require('cors');
 
 app = express();
+app.use(cors());
 app.use(serveStatic(__dirname + "/dist"));
 // app.use(
 //   '/api/',
