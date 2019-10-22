@@ -94,12 +94,18 @@ const store = new Vuex.Store({
         api
           .logoutUser()
           .then(resp => {
+            debugger
+            console.log('test1')
             commit(MutationTypes.CLEAR_USER)
             commit(MutationTypes.CLEAR_TOKEN)
             commit(MutationTypes.SET_LOGIN_STATUS, false)
     
+            console.log('test2')
+
             localforage.removeItem('_ACCESS_TOKEN')
             localforage.removeItem('_REFRESH_TOKEN')
+
+            console.log('test3')
 
             resolve(true)
           })
