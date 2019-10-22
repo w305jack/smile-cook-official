@@ -3,6 +3,8 @@ export function APIHost(): string {
     const dotenv = require('dotenv');
     dotenv.config();
 
+    console.log(process.env.HOST)
+    
     return process.env.HOST
 
   } else {
