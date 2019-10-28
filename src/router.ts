@@ -88,8 +88,7 @@ const router = new Router({
     },
     {
       path: '*',
-      name: 'default',
-      component: NotFoundView
+      redirect: '/',
     }
   ]
 })
@@ -99,19 +98,17 @@ router.beforeEach((to, from, next) => {
     routeMap: { to: to, from: from }
   })
 
-  if (!store.state.isLogin) {
-    authStatusCheck()
-  }
-
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.state.isLogin) {
-      next()
-    } else {
-      next({
-        path: '/login',
-        query: { redirect: to.fullPath }
-      })
-    }
+    authStatusCheck((authCheck) => {
+      if (authCheck) {
+        next()
+      } else {
+        next({
+          path: '/login',
+          query: { redirect: to.fullPath }
+        })
+      }
+    })
   } else {
     next()
   }

@@ -13,10 +13,10 @@ localforage.config({
   description: ''
 })
 
-function authStatusCheck () {
+function authStatusCheck (callback: (authCheck: boolean) => void) {
   localforage
     .getItem('_ACCESS_TOKEN')
-    .then(accessToken => {
+    .then((accessToken) => {
       if (!!accessToken) {
         store.commit(MutationTypes.SET_TOKEN, {
           token: accessToken,
@@ -24,30 +24,29 @@ function authStatusCheck () {
         })
         store.dispatch(ActionTypes.GET_USER).then(() => {
           if (!store.state.isLogin) {
-            localforage.removeItem('_ACCESS_TOKEN')
-            localforage.removeItem('_REFRESH_TOKEN')
+            clearForage()
+            store.commit(MutationTypes.SET_LOGIN_STATUS, false)
+            callback(false)
           } else {
             store.commit(MutationTypes.SET_LOGIN_STATUS, true)
+            callback(true)
           }
-          // localforage.getItem('_REFRESH_TOKEN').then(refreshToken => {
-          //   if (!!refreshToken && !store.state.isLogin) {
-          //     store.commit(MutationTypes.SET_TOKEN, {
-          //       token: refreshToken,
-          //       status: 'refresh'
-          //     })
-          //     store.dispatch(ActionTypes.GET_USER, { username: 'me' }).then(()=> {
-          //       throw Error('')
-          //     })
-          //   }
-          // })
         })
+      } else {
+        store.commit(MutationTypes.SET_LOGIN_STATUS, false)
+        callback(false)
       }
     })
     .catch(() => {
-      localforage.removeItem('_ACCESS_TOKEN')
-      localforage.removeItem('_REFRESH_TOKEN')
+      clearForage()
       store.commit(MutationTypes.SET_LOGIN_STATUS, false)
+      callback(false)
     })
+}
+
+function clearForage () {
+  localforage.removeItem('_ACCESS_TOKEN')
+  localforage.removeItem('_REFRESH_TOKEN')
 }
 
 export { authStatusCheck, localforage }

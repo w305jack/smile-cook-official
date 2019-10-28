@@ -92,33 +92,34 @@ const store = new Vuex.Store({
     [ActionTypes.LOGOUT]: ({ commit }) => {
       return new Promise((resolve, reject) => {
         api
-          .logoutUser()
-          .then(resp => {
-            debugger
-            console.log('test1')
-            commit(MutationTypes.CLEAR_USER)
-            commit(MutationTypes.CLEAR_TOKEN)
-            commit(MutationTypes.SET_LOGIN_STATUS, false)
-    
-            console.log('test2')
-
-            localforage.removeItem('_ACCESS_TOKEN')
-            localforage.removeItem('_REFRESH_TOKEN')
-
-            console.log('test3')
-
-            resolve(true)
+        .logoutUser()
+        .then(resp => {
+          commit(MutationTypes.CLEAR_USER)
+          commit(MutationTypes.CLEAR_TOKEN)
+          commit(MutationTypes.SET_LOGIN_STATUS, false)
+          commit(MutationTypes.SET_ALERT, { 
+            alert: {
+              show: true,
+              message: resp.message,
+              style: 'alert-success'
+            } 
           })
-          .catch(error => {
-            commit(MutationTypes.CLEAR_USER)
-            commit(MutationTypes.CLEAR_TOKEN)
-            commit(MutationTypes.SET_LOGIN_STATUS, false)
-    
-            localforage.removeItem('_ACCESS_TOKEN')
-            localforage.removeItem('_REFRESH_TOKEN')
+  
+          localforage.removeItem('_ACCESS_TOKEN')
+          localforage.removeItem('_REFRESH_TOKEN')
 
-            reject(error)
-          })
+          resolve(resp)
+        })
+        .catch(error => {
+          commit(MutationTypes.CLEAR_USER)
+          commit(MutationTypes.CLEAR_TOKEN)
+          commit(MutationTypes.SET_LOGIN_STATUS, false)
+  
+          localforage.removeItem('_ACCESS_TOKEN')
+          localforage.removeItem('_REFRESH_TOKEN')
+
+          resolve(error)
+        })
       })
     },
 

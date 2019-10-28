@@ -30,7 +30,7 @@
         <li style="padding: .15rem 0">
           <a
             @click.stop="logoutUser()"
-            href=""
+            href="#"
             class="text-white"
           >Logout</a>
         </li>
@@ -62,8 +62,8 @@ export default class ProfileComponent extends Vue {
   logoutUser() {
     this.$store.dispatch(ActionTypes.LOGOUT).then(success => {
       console.log('logout success')
-      this.$router.replace({ name: "home" });
-    });
+      this.$router.replace({ name: "login" });
+    })
   }
 
   // Object.keys(this.$store.state.profile).length === 0

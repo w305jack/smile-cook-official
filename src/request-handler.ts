@@ -80,7 +80,7 @@ const errorHandler = (response: AxiosResponse | boolean): any => {
         break
 
       case HttpStatus.UNPROCESSABLE_ENTITY:
-        router.replace('/')
+        router.replace({ name: 'home' })
         break
 
       case HttpStatus.TOO_MANY_REQUESTS:
@@ -88,7 +88,7 @@ const errorHandler = (response: AxiosResponse | boolean): any => {
           alert: {
             show: true,
             message:
-              'Too many request',
+              'Server in the loading, please try again later.',
             style: 'alert-danger'
           }
         })
