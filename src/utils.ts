@@ -3,15 +3,9 @@
 // const apiUrl = require('../package.json').apiUrl
 
 export function APIHost(): string {
-  if (!!process.env.NODE_ENV) {
-
-    // console.log('vue:' + process.env.VUE_APP_SECRET)
-
-    // console.log('url:' + process.env.VUE_APP_API_URL)
-
-    return process.env.VUE_APP_API_URL
-
+  if (process.env.NODE_ENV === 'production') {
+    return 'https://cors-anywhere.herokuapp.com/' + process.env.VUE_APP_API_URL
   } else {
-    return '/api/'
+    return 'http://127.0.0.1:5000/'
   }  
 }

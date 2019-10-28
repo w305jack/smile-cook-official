@@ -6,9 +6,9 @@ import {
 } from '@/response'
 import store from '@/store'
 
-// import { APIHost } from '@/utils'
+import { APIHost } from '@/utils'
 
-var API_HOST = '/api/'
+var API_HOST = APIHost()
 
 const userListAPI = `${API_HOST}users`
 const userAPI = `${API_HOST}users/{username}`
@@ -192,20 +192,23 @@ function getUserRecipeList (
 function logoutUser (): Promise<MessageItem> {
   return new Promise<MessageItem>((resolve, reject) => {
     axios
-      .delete(revokeAPI, {
-        headers: {
-          ...authorizationOption()
+      .post(revokeAPI,
+        {},
+        {
+          headers: {
+            ...authorizationOption(),
+          },
         }
-      })
-      .then(function (response: any) {
+      )
+      .then(function (response: AxiosResponse) {
         if (response.status === 200) {
-          resolve({ message: '' })
+          resolve(response.data)
         } else {
-          reject(true)
+          reject(response)
         }
       })
       .catch(error => {
-        reject(true)
+        reject(error.reponse)
       })
   })
 }
