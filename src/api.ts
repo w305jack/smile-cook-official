@@ -8,7 +8,7 @@ import store from '@/store'
 
 import { APIHost } from '@/utils'
 
-var API_HOST = '/api/'
+var API_HOST = APIHost()
 
 const userListAPI = `${API_HOST}users`
 const userAPI = `${API_HOST}users/{username}`
