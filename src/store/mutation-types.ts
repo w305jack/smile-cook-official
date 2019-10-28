@@ -20,6 +20,7 @@ export class MutationTypes {
   public static readonly SET_RECIPE_DETAIL = 'SET_RECIPE_DETAIL'
   public static readonly SET_RECIPE_PUBLISH_STATUS = 'SET_RECIPE_PUBLISH_STATUS'
   public static readonly SET_RECIPE_COVER = 'SET_RECIPE_COVER'
+  public static readonly SET_PREVIOUS = 'SET_PREVIOUS'
   public static readonly SET_ALERT = 'SET_ALERT'
   public static readonly RESET_ALERT = 'RESET_ALERT'
   public static readonly SET_DIALOG = 'SET_DIALOG'

@@ -23,6 +23,10 @@ const recipeStore: Module<any, any> = {
     recipeList: <Array<RecipeListItem>>[],
     recipeDetail: <RecipeItem>{
       author: {}
+    },
+    previous: {
+      path: '',
+      query: {}
     }
   },
 
@@ -98,6 +102,10 @@ const recipeStore: Module<any, any> = {
           return false
         }
       }, errorHandler)
+    },
+
+    [ActionTypes.UPDATE_PREVIOUS]: ({ commit }, { path, query }) => {
+        commit(MutationTypes.SET_PREVIOUS, { path, query })
     }
   },
 
@@ -133,6 +141,10 @@ const recipeStore: Module<any, any> = {
 
     [MutationTypes.SET_RECIPE_COVER]: (state, { resp }) => {
       state.recipeDetail.cover_url = resp.cover_url
+    },
+
+    [MutationTypes.SET_PREVIOUS]: (state, { path, query }) => {
+      state.previous = {path: path, query: query}
     }
   }
 }

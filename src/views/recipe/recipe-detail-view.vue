@@ -10,7 +10,7 @@
 
           <div class="col-1 my-auto">
             <a
-              @click.stop="$router.go(-1)"
+              @click.stop="toPreviousPage()"
               class="btn btn-outline-secondary"
             >back</a>
           </div>

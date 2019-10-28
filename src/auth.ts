@@ -22,8 +22,8 @@ function authStatusCheck (callback: (authCheck: boolean) => void) {
           token: accessToken,
           status: 'access'
         })
-        store.dispatch(ActionTypes.GET_USER).then(() => {
-          if (!store.state.isLogin) {
+        store.dispatch(ActionTypes.GET_USER).then((resp) => {
+          if (!resp) {
             clearForage()
             store.commit(MutationTypes.SET_LOGIN_STATUS, false)
             callback(false)

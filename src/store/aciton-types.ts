@@ -15,6 +15,8 @@ export class ActionTypes {
   public static readonly PUBLISH_RECIPE = 'PUBLISH_RECIPE'
   public static readonly UNPUBLISH_RECIPE = 'UNPUBLISH_RECIPE'
   public static readonly UPLOAD_COVER = 'UPLOAD_COVER'
+  public static readonly UPDATE_PREVIOUS = 'UPDATE_PREVIOUS'
+
   public static readonly GET_RECIPE = 'GET_RECIPE'
   public static readonly GET_USER_RECIPE_LIST = 'GET_USER_RECIPE_LIST'
   public static readonly OPEN_ALERT = 'OPEN_ALERT'

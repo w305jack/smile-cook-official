@@ -53,9 +53,11 @@ const userStore: Module<any, any> = {
         .getMe()
         .then(resp => {
           commit(MutationTypes.SET_USER, { resp })
+          return true
         })
-        .catch(() => {
+        .catch((error) => {
           commit(MutationTypes.REQUEST_USER_ERROR)
+          return false
         })
     },
 

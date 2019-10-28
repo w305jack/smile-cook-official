@@ -110,6 +110,7 @@ router.beforeEach((to, from, next) => {
       }
     })
   } else {
+    authStatusCheck((authCheck) => {})
     next()
   }
 })
