@@ -71,8 +71,9 @@ const errorHandler = (response: AxiosResponse | boolean): any => {
               style: 'alert-danger'
             }
           })
+        } else {
+          router.replace({ name: 'not-found' })
         }
-        router.replace({ name: 'not-found' })
         break
 
       case HttpStatus.NOT_FOUND:
