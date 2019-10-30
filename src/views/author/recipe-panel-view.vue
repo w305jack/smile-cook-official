@@ -66,6 +66,13 @@
 
         <div class="row py-3">
           <div class="col">
+            <label for="ingredients">Ingredients</label>
+            <textarea v-model="inputItem.ingredients" type="text" class="form-control" id="ingredients" placeholder=""/>
+          </div>
+        </div>
+
+        <div class="row py-3">
+          <div class="col">
             <label for="directions">Directions</label>
             <textarea v-model="inputItem.directions" type="text" class="form-control" id="directions" placeholder=""/>
           </div>

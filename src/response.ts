@@ -31,6 +31,7 @@ export interface RecipeItem {
   num_of_servings: number
   cook_time: number
   directions: string
+  ingredients: string
   is_publish: boolean
   cover_url: string
   author: AuthorItem

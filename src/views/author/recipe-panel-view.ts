@@ -10,6 +10,7 @@ export interface InputItem {
   description: string
   num_of_servings: number
   cook_time: number
+  ingredients: string
   directions: string
 }
 
@@ -168,6 +169,7 @@ export default class RecipePanelView extends Vue {
       description: this.inputItem.description || '',
       num_of_servings: this.inputItem.num_of_servings || 1,
       cook_time: this.inputItem.cook_time || 1,
+      ingredients: this.inputItem.ingredients || '',
       directions: this.inputItem.directions || ''
     }
 

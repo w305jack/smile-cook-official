@@ -6,6 +6,6 @@ export function APIHost(): string {
   if (process.env.NODE_ENV === 'production') {
     return 'https://cors-anywhere.herokuapp.com/' + process.env.VUE_APP_API_URL
   } else {
-    return 'http://127.0.0.1:5000/'
+    return '/api/'
   }  
 }
